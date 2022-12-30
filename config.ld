@@ -1,6 +1,6 @@
-project='[repo-name]'
-title='[module-name] docs'
-description='[short-description]'
+project='homie-envoy'
+title='homie-envoy docs'
+description='Homie bridge for an Enphase Envoy solar installation'
 
 format='markdown'
 use_markdown_titles = true

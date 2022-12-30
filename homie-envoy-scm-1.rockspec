@@ -1,8 +1,8 @@
-local package_name = "[module-name]"
+local package_name = "homie-envoy"
 local package_version = "scm"
 local rockspec_revision = "1"
-local github_account_name = "[github-account-name]"
-local github_repo_name = "[repo-name]"
+local github_account_name = "Tieske"
+local github_repo_name = "homie-envoy"
 
 
 package = package_name
@@ -15,9 +15,9 @@ source = {
 }
 
 description = {
-  summary = "[short-description]",
+  summary = "Homie bridge for an Enphase Envoy solar installation",
   detailed = [[
-    [short-description]
+    Homie bridge for an Enphase Envoy solar installation
   ]],
   license = "MIT",
   homepage = "https://github.com/"..github_account_name.."/"..github_repo_name,
@@ -31,17 +31,17 @@ build = {
   type = "builtin",
 
   modules = {
-    ["[module-name].init"] = "src/[module-name]/init.lua",
+    ["homie-envoy.init"] = "src/homie-envoy/init.lua",
   },
 
   install = {
     bin = {
-      ["[module-name]"] = "bin/[module-name].lua",
+      ["homie-envoy"] = "bin/homie-envoy.lua",
     }
   },
 
   copy_directories = {
-    -- can be accessed by `luarocks [module-name] doc` from the commandline
+    -- can be accessed by `luarocks homie-envoy doc` from the commandline
     "docs",
   },
 }
