@@ -32,11 +32,12 @@ build = {
 
   modules = {
     ["homie-envoy.init"] = "src/homie-envoy/init.lua",
+    ["homie-envoy.enphase"] = "src/homie-envoy/enphase.lua",
   },
 
   install = {
     bin = {
-      ["homie-envoy"] = "bin/homie-envoy.lua",
+      ["homieenvoy"] = "bin/homieenvoy.lua",
     }
   },
 
