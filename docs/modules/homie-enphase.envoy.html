@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>homie-enphase docs</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>homie-enphase</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/homie-enphase.html">homie-enphase</a></li>
+  <li><strong>homie-enphase.envoy</strong></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="nowrap">
+  <li><a href="../scripts/homieenphase.html">homieenphase</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/01-introduction.md.html">1. Introduction</a></li>
+  <li><a href="../topics/02-advanced.md.html">2. Advanced topic</a></li>
+  <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
+  <li><a href="../topics/LICENSE.md.html">MIT License</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/example1.lua.html">example1.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>homie-enphase.envoy</code></h1>
+<p>This module fetches data from an Enphase Envoy gateway.</p>
+<p> (for solar systems and battery installations)</p>
+
+<p> info: <a href="https://enphase.com/download/iq-gateway-access-using-local-apis-or-local-ui-token-based-authentication-tech-brief">https://enphase.com/download/iq-gateway-access-using-local-apis-or-local-ui-token-based-authentication-tech-brief</a></p>
+
+<p> from <a href="https://support.enphase.com/s/question/0D53m000095MFl3CAG/is-there-anywhere-where-i-can-view-full-local-api-documentation-for-my-envoy">this discussion</a>.</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: Copyright (c) 2022-2023 Thijs Schreijer</li>
+        <li><strong>License</strong>: MIT, see <a href="../topics/LICENSE.md.html#">LICENSE.md</a>.</li>
+        <li><strong>Author</strong>: Thijs Schreijer</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Envoy.new">Envoy.new (opts)</a></td>
+	<td class="summary">Creates a new Enphase object to collect data.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:clear_token">Envoy:clear_token ()</a></td>
+	<td class="summary">Clears the token, forcing a new authentication on a next request.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:get_config">Envoy:get_config ()</a></td>
+	<td class="summary">Returns combined results of <a href="../modules/homie-enphase.envoy.html#Envoy:get_home">get_home</a> and <a href="../modules/homie-enphase.envoy.html#Envoy:get_inventory">get_inventory</a>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:get_home">Envoy:get_home ()</a></td>
+	<td class="summary">Returns the results from <code>&quot;/home.json&quot;</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:get_inventory">Envoy:get_inventory ()</a></td>
+	<td class="summary">Returns the results from <code>&quot;/inventory.json&quot;</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:get_inverters">Envoy:get_inverters ()</a></td>
+	<td class="summary">Returns the results from <code>&quot;/api/v1/production/inverters&quot;</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:get_production">Envoy:get_production ()</a></td>
+	<td class="summary">Returns the results from <code>&quot;/production.json&quot;</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:get_status">Envoy:get_status ()</a></td>
+	<td class="summary">Returns current power stats of the system.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:get_token">Envoy:get_token ()</a></td>
+	<td class="summary">Returns the active token, or fetches a new one if required.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:request">Envoy:request (path[, query])</a></td>
+	<td class="summary">Makes a single GET request to the Envoy gateway based on the specified path.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Envoy:rewrite_error">Envoy:rewrite_error ([expected=nil], status, body, headers)</a></td>
+	<td class="summary">Rewrite errors to Lua format (nil+error).</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Enphase">Enphase</a></td>
+	<td class="summary">The module table containing some global settings and constants.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Envoy.new"></a>
+    <strong>Envoy.new (opts)</strong>
+    </dt>
+    <dd>
+    Creates a new Enphase object to collect data.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">opts</span> table with options
+        <ul>
+        <li><span class="parameter">username</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the username used to connect to the gateway.
+        </li>
+        <li><span class="parameter">password</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the password used to connect to the gateway.
+        </li>
+        <li><span class="parameter">serial</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the serial number of the gateway to connect to.
+        </li>
+        <li><span class="parameter">hostname</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         the hostname/ip where the Envoy gateway can be found.
+         (<em>default</em> "envoy")
+        </li>
+        </li></ul>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Enphase instance
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> Envoy = <span class="global">require</span> <span class="string">"homie-enphase.envoy"</span>
+<span class="keyword">local</span> myenvoy = Envoy.new {
+  username = <span class="string">"my.user@email.com"</span>,
+  password = <span class="string">"sooper_secret"</span>,
+  serial = <span class="string">"123456"</span>,
+}
+
+<span class="keyword">local</span> data = <span class="global">assert</span>(myenvoy:get_home())</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Envoy:clear_token"></a>
+    <strong>Envoy:clear_token ()</strong>
+    </dt>
+    <dd>
+    Clears the token, forcing a new authentication on a next request.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        true
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:get_config"></a>
+    <strong>Envoy:get_config ()</strong>
+    </dt>
+    <dd>
+    Returns combined results of <a href="../modules/homie-enphase.envoy.html#Envoy:get_home">get_home</a> and <a href="../modules/homie-enphase.envoy.html#Envoy:get_inventory">get_inventory</a>.
+ The main structure will be <a href="../modules/homie-enphase.envoy.html#Envoy:get_home">get_home</a> with an additional key <code>inventory</code>
+ which lists all devices retrieved from <a href="../modules/homie-enphase.envoy.html#Envoy:get_inventory">get_inventory</a>.</p>
+
+<p> Note: the device arrays can be indexed by serial as well.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        table with all data.
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> config = <span class="global">assert</span>(envoy:get_config())
+<span class="keyword">local</span> first_device = config.inventory.pcu[<span class="number">1</span>]
+<span class="comment">-- indexing by serial also works:
+</span><span class="global">assert</span>(first_device == config.inventory.pcu[first_device.serial_num])</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Envoy:get_home"></a>
+    <strong>Envoy:get_home ()</strong>
+    </dt>
+    <dd>
+    Returns the results from <code>&quot;/home.json&quot;</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response data.</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response headers.</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:get_inventory"></a>
+    <strong>Envoy:get_inventory ()</strong>
+    </dt>
+    <dd>
+    Returns the results from <code>&quot;/inventory.json&quot;</code>.
+ Note that the returned body can be indexed as an array, but also by the device
+ types (eg. <code>body.PCU</code>). The same applies for the device arrays for each type.
+ Those can be indexed by serial number. eg. <code>panel = body.PCU.devices[&quot;482217048264&quot;]</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response data.</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response headers.</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:get_inverters"></a>
+    <strong>Envoy:get_inverters ()</strong>
+    </dt>
+    <dd>
+    Returns the results from <code>&quot;/api/v1/production/inverters&quot;</code>.
+ Note that the returned body can be indexed as an array, but also by serial
+ number. eg. <code>panel = body[&quot;482217048264&quot;]</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response data.</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response headers.</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:get_production"></a>
+    <strong>Envoy:get_production ()</strong>
+    </dt>
+    <dd>
+    Returns the results from <code>&quot;/production.json&quot;</code>.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response data.</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response headers.</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:get_status"></a>
+    <strong>Envoy:get_status ()</strong>
+    </dt>
+    <dd>
+    Returns current power stats of the system.  Combination of results
+ from <a href="../modules/homie-enphase.envoy.html#Envoy:get_production">get_production</a>, <a href="../modules/homie-enphase.envoy.html#Envoy:get_inventory">get_inventory</a> and <a href="../modules/homie-enphase.envoy.html#Envoy:get_inverters">get_inverters</a>.</p>
+
+<p> Note: the devices sub-table (array) can also be indexed by serialNumber.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        table with all data.
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:get_token"></a>
+    <strong>Envoy:get_token ()</strong>
+    </dt>
+    <dd>
+    Returns the active token, or fetches a new one if required.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        the token.
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:request"></a>
+    <strong>Envoy:request (path[, query])</strong>
+    </dt>
+    <dd>
+    Makes a single GET request to the Envoy gateway based on the specified path.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">path</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         http-path to fetch (must start with a '/')
+        </li>
+        <li><span class="parameter">query</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         optional query parameters (will be escaped)
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        the http-status code of the response.</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        The response body, a table if it was valid JSON.</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        the response headers.</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Envoy:rewrite_error"></a>
+    <strong>Envoy:rewrite_error ([expected=nil], status, body, headers)</strong>
+    </dt>
+    <dd>
+    Rewrite errors to Lua format (nil+error).
+ Takes the output of the <a href="../modules/homie-enphase.envoy.html#Envoy:request">request</a> function and validates it for errors;</p>
+
+<ul>
+    <li>nil+err</li>
+    <li>mismatch in expected status code (a 200 expected, but a 404 received)</li>
+</ul>
+
+<p> This reduces the error handling to standard Lua errors, instead of having to
+ validate each of the situations above individually.</p>
+
+<p> If the status code is a 401 or 403, then the token will be cleared.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">expected</span>
+            <span class="types"><span class="type">number</span></span>
+         expected status code, if nil, it will be ignored
+         (<em>default</em> nil)
+        </li>
+        <li><span class="parameter">status</span>
+            <span class="types"><span class="type">number</span></span>
+         the response status code
+        </li>
+        <li><span class="parameter">body</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         the response body
+        </li>
+        <li><span class="parameter">headers</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         the response headers
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response body</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        response headers</li>
+    </ol>
+     <h3>Or</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">nil</span></span>
+
+
+</li>
+        <li>
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        error message</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> Envoy = <span class="global">require</span> <span class="string">"enphase.envoy"</span>
+<span class="keyword">local</span> envoy = Envoy.new {
+   username = <span class="string">"abcdef"</span>,
+   password = <span class="string">"xyz"</span>,
+   serial = <span class="string">"123"</span>,
+}
+
+<span class="comment">-- Make a request where we expect a 200 result
+</span><span class="keyword">local</span> body, headers = envoy:rewrite_error(<span class="number">200</span>, envoy:request(<span class="string">"/some/thing"</span>, <span class="string">"GET"</span>))
+<span class="keyword">if</span> <span class="keyword">not</span> ok <span class="keyword">then</span>
+  <span class="comment">-- handle error
+</span>  <span class="comment">-- a 404 will also follow this path now, since we only want 200's
+</span><span class="keyword">end</span></pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Enphase"></a>
+    <strong>Enphase</strong>
+    </dt>
+    <dd>
+    The module table containing some global settings and constants.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">http</span>
+         This is a function set on the module table, such that it can
+ be overridden by another implementation (eg. Copas). The default implementation
+ uses the LuaSec one (module <code>ssl.https</code>).
+        </li>
+        <li><span class="parameter">log</span>
+         Logger is set on the module table, to be able to override it.
+ Default is the LuaLogging default logger.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-11-16 23:51:56 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

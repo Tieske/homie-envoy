@@ -1,8 +1,8 @@
-local package_name = "homie-envoy"
+local package_name = "homie-enphase"
 local package_version = "scm"
 local rockspec_revision = "1"
 local github_account_name = "Tieske"
-local github_repo_name = "homie-envoy"
+local github_repo_name = "homie-enphase"
 
 
 package = package_name
@@ -25,24 +25,28 @@ description = {
 
 dependencies = {
   "lua >= 5.1, < 5.5",
+  "lua-cjson",
+  "copas",
+  "lualogging",
+  "luasec",
 }
 
 build = {
   type = "builtin",
 
   modules = {
-    ["homie-envoy.init"] = "src/homie-envoy/init.lua",
-    ["homie-envoy.enphase"] = "src/homie-envoy/enphase.lua",
+    ["homie-enphase.init"] = "src/homie-enphase/init.lua",
+    ["homie-enphase.envoy"] = "src/homie-enphase/envoy.lua",
   },
 
   install = {
     bin = {
-      ["homieenvoy"] = "bin/homieenvoy.lua",
+      ["homieenphase"] = "bin/homieenphase.lua",
     }
   },
 
   copy_directories = {
-    -- can be accessed by `luarocks homie-envoy doc` from the commandline
+    -- can be accessed by `luarocks homie-enphase doc` from the commandline
     "docs",
   },
 }

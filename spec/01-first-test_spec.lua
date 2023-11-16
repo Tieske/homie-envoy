@@ -5,7 +5,7 @@ describe("description: replace this file with your own tests", function()
     local mymod
 
     assert.has.no.error(function()
-      mymod = require "homie-envoy"
+      mymod = require "homie-enphase"
     end)
 
     assert.is.table(mymod)

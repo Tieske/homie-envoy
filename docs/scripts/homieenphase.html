@@ -32,18 +32,14 @@
 
 
 
-<h2>Examples</h2>
+<h2>Scripts</h2>
 <ul class="nowrap">
-  <li><strong>example1.lua</strong></li>
+  <li><strong>homieenphase</strong></li>
 </ul>
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/homie-enphase.html">homie-enphase</a></li>
   <li><a href="../modules/homie-enphase.envoy.html">homie-enphase.envoy</a></li>
-</ul>
-<h2>Scripts</h2>
-<ul class="nowrap">
-  <li><a href="../scripts/homieenphase.html">homieenphase</a></li>
 </ul>
 <h2>Topics</h2>
 <ul class="">
@@ -52,21 +48,47 @@
   <li><a href="../topics/CHANGELOG.md.html">CHANGELOG</a></li>
   <li><a href="../topics/LICENSE.md.html">MIT License</a></li>
 </ul>
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/example1.lua.html">example1.lua</a></li>
+</ul>
 
 </div>
 
 <div id="content">
 
-    <h2>example1.lua</h2>
-<pre>
-<span class="comment">-- example to add to documentation
-</span>
-<span class="keyword">for</span> key, value <span class="keyword">in</span> <span class="global">pairs</span>(_G) <span class="keyword">do</span>
-  <span class="keyword">if</span> key:sub(<span class="number">1</span>,<span class="number">1</span>) == <span class="string">"_"</span> <span class="keyword">and</span> <span class="global">type</span>(value) == <span class="string">"string"</span> <span class="keyword">then</span>
-    key = key:match(<span class="string">"^_+(.+)$"</span>)
-    <span class="global">print</span>(key, value)
-  <span class="keyword">end</span>
-<span class="keyword">end</span></pre>
+<h1>Script <code>homieenphase</code></h1>
+<p>Main CLI application.</p>
+<p> Reads configuration from environment variables and starts the Enphase-to-Homie bridge.
+ Does not support any CLI parameters.</p>
+
+<p> For configuring the log, use LuaLogging environment variable prefix <code>&quot;HOMIE_LOG_&quot;</code>, see
+ "logLevel" in the example below.</p>
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"># configure parameters as environment variables
+export ENPHASE_USERNAME=&quot;xxxxxxxx&quot;
+export ENPHASE_PASSWORD=&quot;xxxxxxxx&quot;
+export ENPHASE_SERIAL=&quot;xxxxxxxx&quot;
+export ENPHASE_HOSTNAME=&quot;xxxxxxxx&quot;         # default: &quot;envoy&quot;
+export ENPHASE_POLL_INTERVAL=5             # default: 15 seconds
+export HOMIE_MQTT_URI=&quot;mqtt://synology&quot;    # format:  &quot;mqtt(s)://user:pass@hostname:port&quot;
+export HOMIE_DOMAIN=&quot;homie&quot;                # default: &quot;homie&quot;
+export HOMIE_DEVICE_ID=&quot;enphase&quot;           # default: &quot;enphase-envoy&quot;
+export HOMIE_DEVICE_NAME=&quot;EE2H bridge&quot;     # default: &quot;Enphase-Envoy-to-Homie bridge&quot;
+export HOMIE_LOG_LOGLEVEL=&quot;info&quot;           # default: &quot;INFO&quot;
+
+# start the application
+homieenphase
+</pre>
+    </ul>
+
+
+
+<br/>
+<br/>
+
+
 
 
 </div> <!-- id="content" -->

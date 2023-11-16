@@ -1,5 +1,5 @@
-project='homie-envoy'
-title='homie-envoy docs'
+project='homie-enphase'
+title='homie-enphase docs'
 description='Homie bridge for an Enphase Envoy solar installation'
 
 format='markdown'
