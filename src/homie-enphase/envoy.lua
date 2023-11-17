@@ -369,7 +369,10 @@ do
   function Envoy:request(path, query)
     assert(path:sub(1,1) == "/", "path must start with a '/'")
 
-    local token = self:get_token()
+    local token, err = self:get_token()
+    if not token then
+      return nil, "not authenticated: " .. err
+    end
     local req_method = "GET"
     local req_query = query or {}
     local req_body = ""
