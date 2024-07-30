@@ -37,7 +37,7 @@ RUN apk add --no-cache \
 ENV ENPHASE_USERNAME "username..."
 ENV ENPHASE_PASSWORD "password..."
 ENV ENPHASE_SERIAL "serial..."
-ENV ENPHASE_HOSTNAME "hostname..."
+ENV ENPHASE_HOSTNAME "envoy"
 ENV ENPHASE_POLL_INTERVAL "15"
 ENV HOMIE_DOMAIN "homie"
 ENV HOMIE_MQTT_URI "mqtt://mqtthost:1883"
